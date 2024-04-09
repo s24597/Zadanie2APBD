@@ -10,17 +10,18 @@ namespace LegacyApp
         public bool AddUser(string firstName, string lastName, string email, DateTime dateOfBirth, int clientId)
         {
             if (
-                Validation.Check_Name_And_Surname(firstName, lastName) && 
-                Validation.Check_Mail(email) &&
+                Validation.Check_Name_And_Surname(firstName, lastName) || 
+                Validation.Check_Mail(email) ||
                 Validation.Check_Age(Functionalities.Calculate_Age(dateOfBirth))
                 )
             {
                 return false;
             }
 
-            var user = Functionalities.Create_User(Repo.GetById(clientId),dateOfBirth,email,firstName,lastName);
-
-            switch (user.Client.GetType().ToString())
+            User user = Functionalities.Create_User(Repo.GetById(clientId),dateOfBirth,email,firstName,lastName);
+            Client client = (Client) user.Client;
+            
+            switch (client.Type)
             {
                 case "VeryImportantClient":
                     user.HasCreditLimit = false;
