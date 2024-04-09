@@ -11,5 +11,15 @@ public class Validation
     {
         return !email.Contains("@") && !email.Contains(".");
     }
+
+    public static bool Check_Age(int age)
+    {
+        return age < 21;
+    }
+
+    public static bool Check_Credit_Limit(User user)
+    {
+        return user.HasCreditLimit && user.CreditLimit < 500;
+    }
     
 }
